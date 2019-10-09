@@ -10,13 +10,13 @@ def column(matrix, i):
     return [row[i] for row in matrix]
 
 
-def matrixGen():
+def matrixGen(n):
     matrix={}
-    #get first colun
+    #get first column
     column1=column(mat,0) 
     count=Counter(column1)
     sort= sorted(count.items(), key=lambda x: x[1], reverse=True)
-    top=sort[:3]    #por enquanto para 3, mas depois o top é o valor passado pelo arg.
+    top=sort[:n]    #por enquanto para 3, mas depois o top é o valor passado pelo arg.
 
     #inicializar a matrix:
     for i in range(len(top)):
@@ -39,12 +39,12 @@ def matrixGen():
     for i in range(len(mat)):
         matrix[mat[i][0]][mat[i][1]]+=1
 
-    print(matrix)                
+    return(matrix)                
 
 
 def main():
-    matrixGen()
-
+    matrix=matrixGen(3)
+    print(matrix)
 if __name__ == "__main__":
     main() 
 
