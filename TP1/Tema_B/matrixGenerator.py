@@ -37,6 +37,8 @@ def matrixGen(mat,n):
 
     return(matrix)                
 
+def outputMaker(matrix):
+    print("ola")
 
 def main():
     #lista com as palavras separadas que temos como input.
@@ -44,9 +46,7 @@ def main():
     ['a', 'chegar'], ['muito', 'doente'], ['um', 'pandemonio']]
 
     matrix=matrixGen(mat,3)
-    print(matrix)
+    outputMaker(matrix)
 
-    
 if __name__ == "__main__":
     main() 
-
