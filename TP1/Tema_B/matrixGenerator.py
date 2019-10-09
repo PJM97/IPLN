@@ -1,16 +1,12 @@
 from collections import Counter
 import collections
 
-#lista com as palavras separadas que temos como input.
-mat = [['um', 'lindo'], ['a', 'chegar'], ['muito', 'cansada'],
- ['a', 'chegar'], ['muito', 'doente'], ['um', 'pandemonio']]
-
 #Funcao que dá a coluna.
 def column(matrix, i):
     return [row[i] for row in matrix]
 
 
-def matrixGen(n):
+def matrixGen(mat,n):
     matrix={}
     #get first column
     column1=column(mat,0) 
@@ -43,8 +39,14 @@ def matrixGen(n):
 
 
 def main():
-    matrix=matrixGen(3)
+    #lista com as palavras separadas que temos como input.
+    mat = [['um', 'lindo'], ['a', 'chegar'], ['muito', 'cansada'],
+    ['a', 'chegar'], ['muito', 'doente'], ['um', 'pandemonio']]
+
+    matrix=matrixGen(mat,3)
     print(matrix)
+
+    
 if __name__ == "__main__":
     main() 
 
