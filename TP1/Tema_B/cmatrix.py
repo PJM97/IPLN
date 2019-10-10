@@ -32,8 +32,8 @@ Penso que esta RegEx nao está a 100%
 def getWord():
     # p=re.compile(r'[a-zA-Z]+')
     # p = re.sub(r"[a-zA-Z]+",sys.argv[3])
-    if(len((re.findall(r'[\w]+',sys.argv[3]))[0]) != len(sys.argv[3])):
-    	# print(str(sys.argv[3]))
+    if(not isValidWord(sys.argv[3])):
+        # print(str(sys.argv[3]))
         sys.exit("Invalid word")
     return(sys.argv[3])
 
@@ -50,26 +50,39 @@ Não está a 100%. Temos de arrumar pontos e assim.
 '''
 def wordParser(fd):
     text=fd.read()
-    return(re.split(r"[\ .,;]", text))
+    return(re.split(r"[\ \n]", text))
   
 def loadMatrix(w,wl):
     # print("Funcao para povoar a matriz")
     l=[]
     r=[]
     k=0
+    w=extractValidWord(w)
     for i in wl:
-    	if(k>=1):
-    		l.append(i)
-    		k+=1
-    		if(k==3):
-    			k=0;
-    			r.append(l)
-    			l=[]
-    	if(i==w): k=1
+        if(k>=1):
+            if(isEndOfSentence(i)):
+                l.append(extractValidWord(i))
+                k=3
+            else:
+                l.append(extractValidWord(i))
+                k+=1
+            if(k==3):
+                k=0;
+                r.append(l)
+                l=[]
+        if(extractValidWord(i)==w): k=1
 
     return r
 
+def isValidWord(w):
+    return 0<len(w)==len((re.findall(r'[\w]+',w))[0])
 
+def isEndOfSentence(w):
+    return len(re.findall(r'[\.\n]+',w))>0
+
+def extractValidWord(w):
+    r = re.findall(r'[\w]+',w)
+    return r[0] if len(r)>0 else []
 
 def outputMaker():
     print("Funçao que vai atravessar a estrutura e criar o output")
@@ -77,7 +90,7 @@ def outputMaker():
 def main():
     ordem,number,word,fd=validInput()
     wordList = wordParser(fd)
-    print(wordList)
+    print("\n",wordList,"\n")
     
 
 
