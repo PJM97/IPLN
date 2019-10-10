@@ -61,20 +61,37 @@ def loadMatrix(w,wl):
     r=[]
     k=0
     w=extractValidWord(w)
-    for i in wl:
-        if(k>=1):
-            if(isEndOfSentence(i)):
-                l.append(extractValidWord(i))
-                if(k==1):l.append(extractValidWord(i))
-                k=3
-            else:
-                l.append(extractValidWord(i))
-                k+=1
-            if(k==3):
-                k=0;
-                r.append(l)
-                l=[]
-        if(extractValidWord(i)==w): k=1
+    if(sys.argv[1]=="-B"):
+    	k1=""
+    	k2=""
+    	k3=""
+    	for i in wl:
+    		if(k3==""):
+    			k3=k2
+    			k2=k1
+    			k1=i
+    		else:
+    			if(extractValidWord(i)==w):
+    				r.append([k1,k2])
+    		k3=k2
+    		k2=k1
+    		k1=i
+
+    else:	
+	    for i in wl:
+	        if(k>=1):
+	            if(isEndOfSentence(i)):
+	                l.append(extractValidWord(i))
+	                if(k==1):l.append(extractValidWord(i))
+	                k=3
+	            else:
+	                l.append(extractValidWord(i))
+	                k+=1
+	            if(k==3):
+	                k=0;
+	                r.append(l)
+	                l=[]
+	        if(extractValidWord(i)==w): k=1
 
     return r
 

@@ -93,8 +93,8 @@ def outputMaker(matrix,word,keys,n,ordem):
     leng=len(trans[0])
     trans[0].insert(0,word)
     i=1
-    print(trans)
-    print(leng)
+    # print(trans)
+    # print(leng)
 
     for j in range(len(trans)):
         if(trans[j][0]!=word):
