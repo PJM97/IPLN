@@ -50,10 +50,26 @@ Não está a 100%. Temos de arrumar pontos e assim.
 '''
 def wordParser(fd):
     text=fd.read()
-    return(re.split(r"\s", text))
+    return(re.split(r"[\ .,;]", text))
   
-def loadMatrix(wl):
-    print("Funcao para povoar a matriz")
+def loadMatrix(w,wl):
+    # print("Funcao para povoar a matriz")
+    l=[]
+    r=[]
+    k=0
+    for i in wl:
+    	if(k>=1):
+    		l.append(i)
+    		k+=1
+    		if(k==3):
+    			k=0;
+    			r.append(l)
+    			l=[]
+    	if(i==w): k=1
+
+    return r
+
+
 
 def outputMaker():
     print("Funçao que vai atravessar a estrutura e criar o output")
@@ -62,7 +78,10 @@ def main():
     ordem,number,word,fd=validInput()
     wordList = wordParser(fd)
     print(wordList)
-    #loadMatrix(wordList)
+    
+
+
+    print(loadMatrix(word,wordList))
     #outputMaker()
 
 if __name__ == "__main__":
