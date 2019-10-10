@@ -30,8 +30,10 @@ def getNumber():
 Penso que esta RegEx nao está a 100%
 '''
 def getWord():
-    p=re.compile(r'[a-zA-Z]+')
-    if(not p.match(sys.argv[3])):
+    # p=re.compile(r'[a-zA-Z]+')
+    # p = re.sub(r"[a-zA-Z]+",sys.argv[3])
+    if(len((re.findall(r'[\w]+',sys.argv[3]))[0]) != len(sys.argv[3])):
+    	# print(str(sys.argv[3]))
         sys.exit("Invalid word")
     return(sys.argv[3])
 
