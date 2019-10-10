@@ -1,6 +1,6 @@
 from collections import Counter
 import collections
-from prettytable import PrettyTable
+# from prettytable import PrettyTable
 
 #Funcao que dá a coluna.
 def column(matrix, i):
@@ -78,15 +78,15 @@ def outputMaker(matrix,word,keys,n):
     while(i<leng):
         trans[i].insert(0," ")
         i+=1
-    #print(trans)
+    print(trans)
     #print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in trans]))
     
-    p = PrettyTable()
-    for row in trans:
-        p.add_row(row)
+    # p = PrettyTable()
+    # for row in trans:
+    #     p.add_row(row)
 
 
-    print(p.get_string(header=False, border=False))
+    # print(p.get_string(header=False, border=False))
 
 '''
 def main():

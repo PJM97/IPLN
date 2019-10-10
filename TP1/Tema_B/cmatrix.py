@@ -66,6 +66,7 @@ def loadMatrix(w,wl):
             if(isEndOfSentence(i)):
                 l.append(extractValidWord(i))
                 k=3
+                if(len(l)==1): l.append("k")
             else:
                 l.append(extractValidWord(i))
                 k+=1
@@ -93,10 +94,13 @@ def outputMaker():
 def main():
     ordem,number,word,fd=validInput()
     wordList = wordParser(fd)
+    
    # print("\n",wordList,"\n")
     mat=loadMatrix(word,wordList)
     keys,matrix=m.matrixGen(mat,int(number))
     m.outputMaker(matrix,word,keys,int(number))
+    print(mat)
+
 
     #outputMaker()
 
