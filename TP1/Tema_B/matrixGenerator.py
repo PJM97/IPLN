@@ -88,6 +88,7 @@ def outputMaker(matrix,word,keys,n):
 
     print(p.get_string(header=False, border=False))
 
+'''
 def main():
     word='está'
     
@@ -101,3 +102,4 @@ def main():
 
 if __name__ == "__main__":
     main() 
+'''

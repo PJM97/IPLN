@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import sys
 import re
+import matrixGenerator as m
+
+
 
 #Funcao faz o parse e valida se todos os args passados são validos
 def validInput():
@@ -90,11 +93,11 @@ def outputMaker():
 def main():
     ordem,number,word,fd=validInput()
     wordList = wordParser(fd)
-    print("\n",wordList,"\n")
-    
+   # print("\n",wordList,"\n")
+    mat=loadMatrix(word,wordList)
+    keys,matrix=m.matrixGen(mat,int(number))
+    m.outputMaker(matrix,word,keys,int(number))
 
-
-    print(loadMatrix(word,wordList))
     #outputMaker()
 
 if __name__ == "__main__":
