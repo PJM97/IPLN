@@ -65,8 +65,8 @@ def loadMatrix(w,wl):
         if(k>=1):
             if(isEndOfSentence(i)):
                 l.append(extractValidWord(i))
+                if(k==1):l.append(extractValidWord(i))
                 k=3
-                if(len(l)==1): l.append("k")
             else:
                 l.append(extractValidWord(i))
                 k+=1
@@ -93,14 +93,19 @@ def outputMaker():
 
 def main():
     ordem,number,word,fd=validInput()
+    #print("order: ",ordem)
     wordList = wordParser(fd)
-    
    # print("\n",wordList,"\n")
     mat=loadMatrix(word,wordList)
-    keys,matrix=m.matrixGen(mat,int(number))
-    m.outputMaker(matrix,word,keys,int(number))
-    print(mat)
+    #print(mat)
+    #Caso de nao haver match:
+    if(len(mat)==0):
+        sys.exit("No match found")
 
+    #m.matrixGen(mat,int(number))
+
+    keys,matrix=m.matrixGen(mat,int(number),ordem)
+    m.outputMaker(matrix,word,keys,int(number),ordem)
 
     #outputMaker()
 
