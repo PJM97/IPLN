@@ -1,5 +1,6 @@
 from collections import Counter
 import collections
+from prettytable import PrettyTable
 
 #Funcao que dá a coluna.
 def column(matrix, i):
@@ -13,7 +14,7 @@ def matrixGen(mat,n):
     count=Counter(column1)
     sort= sorted(count.items(), key=lambda x: x[1], reverse=True)
     top=sort[:n]    #por enquanto para 3, mas depois o top é o valor passado pelo arg.
-
+    #print(top)
     #inicializar a matrix:
     for i in range(len(top)):
         matrix[top[i][0]]={}
@@ -31,22 +32,72 @@ def matrixGen(mat,n):
         for j in range(len(column2)):
             matrix[top[i][0]][column2[j]]=0
 
+
+    
+
     #calcular as ocorrencias.
     for i in range(len(mat)):
         matrix[mat[i][0]][mat[i][1]]+=1
 
-    return(matrix)                
+    return([i[0] for i in top],matrix)                
 
-def outputMaker(matrix):
-    print("ola")
+def outputMaker(matrix,word,keys,n):
+    output =[]
+    s=[]
+    #s.append(word)
+    for i in matrix:
+        for j in (matrix[i]):
+            if(i==j):
+                s.append(i+" "+"("+str(matrix[i][i])+")")
+               # s.append("(")
+             # print(i,"(",matrix[i][i],")")
+            else:
+                 if(matrix[i][j]!=0):
+                    #print(i,j,"(",matrix[i][j],")")  
+                    s.append(i+" "+j+" "+"("+str(matrix[i][j])+")") 
+        output.append(s)
+        s=[] 
+
+    maxLen = max(map(len, output))
+    for row in output:
+        i=len(row)
+        if i < maxLen: 
+            #row.insert(0,' ')
+            #i+=1
+            while(i < maxLen):
+                row.extend([' ' * (maxLen - len(row))])  
+                i+=1
+
+    trans=list(map(list, zip(*output)))
+    
+    leng=len(trans[0])
+
+    trans[0].insert(0,word)
+
+    i=1
+    while(i<leng):
+        trans[i].insert(0," ")
+        i+=1
+    #print(trans)
+    #print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in trans]))
+    
+    p = PrettyTable()
+    for row in trans:
+        p.add_row(row)
+
+
+    print(p.get_string(header=False, border=False))
 
 def main():
+    word='está'
+    
     #lista com as palavras separadas que temos como input.
     mat = [['um', 'lindo'], ['a', 'chegar'], ['muito', 'cansada'],
     ['a', 'chegar'], ['muito', 'doente'], ['um', 'pandemonio']]
-
-    matrix=matrixGen(mat,3)
-    outputMaker(matrix)
+    n=3
+    keys,matrix=matrixGen(mat,n)
+    #print(matrix)
+    outputMaker(matrix,word,keys,n)
 
 if __name__ == "__main__":
     main() 
