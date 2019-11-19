@@ -1,2 +1,125 @@
 Aqui vou meter notas e cenas assim que vamos ter de fazer.
 
+Primeiro -> Para a apresentação é preciso descrever o que é uma ontologia:
+
+
+
+In computer science and information science, an ontology encompasses a representation, 
+formal naming and definition of the categories, properties and relations between the concepts,
+ data and entities that substantiate one, many or all domains of discourse.
+
+Tema:
+    Pronto: Ontology manipulation.
+
+  As new ontologies are made, their use hopefully improves problem solving within that domain
+
+
+Ontology is an explicit specification of conceptualization. The term is borrowed from philosophy,
+ where Ontology is a systematic account of Existence”
+(Tom Gruber and the Knowledge Systems Laboratory at Stanford University).
+In computer science, ontology is a formal representation of the knowledge by
+a set of concepts within a domain and the relationships between those concepts.
+It is used to reason about the properties of that domain and may be used to
+describe the domain. In theory, ontology is a ”formal, explicit specification of
+a shared conceptualization”. Ontology provides a shared vocabulary, which
+can be used to model a domain that is, the type of objects, and/or concepts
+that exist, and their properties and relations.
+
+
+
+Notas do livro de ontologia:
+
+/**
+
+    O que é ontologia no sentido classico:
+
+*/
+    The term ontology comes from the Greek ontologia and means "talking" (-
+logia) about "being" (on / onto-). Ontology is a philosophical discipline which
+can be described as the science of existence or the study of being. Platon
+(427 - 347 BC) was one of the first philosophers to explicitly mention the
+world of ideas or forms in contrast to the real or observed objects, which
+according to his view are only imperfect realizations (or shadows) of the ideas
+(compare [Annas, 1981]). In fact, Platon raised ideas, forms or abstractions
+to entities which one can talk about, thus laying the foundations for ontology.
+Later his student Aristotle (384 - 322 BC) shaped the logical background
+of ontologies and introduced notions such as category, subsumption as well
+as the superconcept/subconcept distinction which he actually referred to as
+genus and subspecies. With differentiae he referred to characteristics which
+distinguish different objects of one genus and allow to formally classify them
+into different categories, thus leading to subspecies. This is the principle on
+which the modern notions of ontological concept and inheritance are based
+upon. In fact, Aristotle can be regarded as the founder of taxonomy, i.e. the
+science of classifying things. Aristotle's ideas represent the foundation for
+object-oriented systems as used today. Furthermore, he introduced a number
+of inference rules, called syllogisms, such as those used in modern logic-based
+reasoning systems [Sowa, 2000a].
+
+
+/*
+    Ontologia no sentido da informática:
+
+*/
+In modern computer science parlance, one does not talk anymore about
+'ontology' as the science of existence, but of 'ontologies' as formal specifications
+ of a conceptualization in the sense of Gruber [Gruber, 1993]. So, whereas
+'ontology' was originally a science, 'ontologies' have received the status 
+of resources representing the conceptual model underlying a certain domain,
+ describing it in a declarative fashion and thus cleanly separating it from procedural aspects.
+
+
+
+
+//O que é uma ontologia:
+   ontology can be used to describe, in a well
+defined and structured way, knowledge about a specific domain. 
+
+Ontologies are a common approach to store knowledge. 
+
+
+normalmente para usar temos grafos ou apis
+
+
+Usos de ontologia:
+
+  referencias:
+  Livro aço que explica ontologias:
+    https://link.springer.com/content/pdf/10.1007%2F978-0-387-39252-3.pdf
+
+
+  https://en.wikipedia.org/wiki/Ontology_(information_science)
+  http://www.math.ubbcluj.ro/~didactica/pdfs/2013/didmath2013-06.pdf
+
+
+
+
+http://www.math.ubbcluj.ro/~didactica/pdfs/2013/didmath2013-06.pdf
+
+
+//Algo do jj
+
+http://repositorium.sdum.uminho.pt/bitstream/1822/16199/1/oml-cisti2011.pdf
+
+
+https://pypi.org/project/pronto/
+
+
+
+
+mais links:
+
+
+https://buildmedia.readthedocs.org/media/pdf/pronto/latest/pronto.pdf?fbclid=IwAR2Qb7BIEOkKP58JXYfDYkDeNG_hMNUl6VP8s-9gPoFfzIWgCvWUq-o5A30
+http://www.math.ubbcluj.ro/~didactica/pdfs/2013/didmath2013-06.pdf
+https://en.wikipedia.org/wiki/Ontology_(information_science)
+https://link.springer.com/chapter/10.1007%2F978-0-387-39252-3_2
+http://jens-lehmann.org/files/2014/pol_introduction.pdf
+http://repositorium.sdum.uminho.pt/bitstream/1822/16199/1/oml-cisti2011.pdf
+http://repositorium.sdum.uminho.pt/browse?type=subject&value=Ontology
+https://www.researchgate.net/publication/260662643_A_Simple_Ontology_of_Manipulation_Actions_Based_on_Hand-Object_Relations
+https://www.researchgate.net/journal/1943-0604_IEEE_Transactions_on_Autonomous_Mental_Development
+http://www-hcr.ijs.si/resources/papers/tamd13.pdf
+https://pronto.readthedocs.io/en/latest/#indices-and-tables
+https://pypi.org/project/pronto/
+
+
