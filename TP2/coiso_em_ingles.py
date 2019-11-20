@@ -11,7 +11,7 @@ tokens = nltk.word_tokenize(sentence)
 #print(tokens)  #basicamente vai partir isto em palavras.
 
 tagged = nltk.pos_tag(tokens)   # agora temos as palavras separadas por tokens.
-#print(tagged)
+print(tagged)
 
 entities = nltk.chunk.ne_chunk(tagged)
 

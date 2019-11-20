@@ -1,0 +1,83 @@
+from nltk.examples.pt import *
+import nltk
+nltk.download()
+from nltk.book import *
+text1
+text1.concordance("monstrous")
+text4.dispersion_plot(["citizens", "democracy", "freedom", "duties", "America"])
+import matplotlib
+quit()
+from nltk.book import *
+import matplotlib
+text4.dispersion_plot(["citizens", "democracy", "freedom", "duties", "America"])
+len(text3)
+sent1 = ['Call', 'me', 'Ishmael', '.']
+sent1
+len(sent1)
+ 	
+>>> def lexical_diversity(text): [1]
+def lexical_diversity(text):
+return len(set(text)) / len(text)
+def lexical_diversity(text):
+	return len(set(text)) / len(text)
+lexical_diversity(sent1)
+sent2
+sent3
+['Monty', 'Python'] + ['and', 'the', 'Holy', 'Grail']
+sent4 + sent1
+sent1.append("Some")
+sent1
+text4[173]
+text4.index('awaken')
+ext5[16715:16735]
+text5[16715:16735]
+sent = ['word1', 'word2', 'word3', 'word4', 'word5',
+...         'word6', 'word7', 'word8', 'word9', 'word10']
+sent = ['word1', 'word2', 'word3', 'word4', 'word5','word6', 'word7', 'word8', 'word9', 'word10']
+sent
+sent[0]
+sent[9]
+sent[5:8]
+sent[:3]
+text2[141525:]
+sent
+sent[0]= 'First'
+sent
+sent1 = ['Call', 'me', 'Ishmael', '.']
+sent1
+clear = lambda: os.system('clear')
+clear
+import os
+clear = lambda: os.system('clear')
+clear
+my_sent = ['Bravely', 'bold', 'Sir', 'Robin', ',', 'rode',
+'forth', 'from', 'Camelot', '.']
+noun_phrase = my_sent[1:4]
+noun_phrase
+saying = ['After', 'all', 'is', 'said', 'and', 'done',
+'more', 'is', 'said', 'than', 'done']
+saying
+tokens = set(saying)
+tokens
+tokens = sorted(tokens)
+tokens
+fdist1 = FreqDist(text1)
+fdist1
+fdist1.most_common(50)
+fdist1
+type(fdist1)
+text1
+type(text1)
+V = set(text1)
+long_words = [w for w in V if len(w) > 15]
+sorted(long_words)
+fdist5 = FreqDist(text5)
+sorted(w for w in set(text5) if len(w) > 7 and fdist5[w] > 7)
+list(bigrams(['more', 'is', 'said', 'than', 'done']))
+text4.collocations()
+sent7
+[w for w in sent7 if len(w) < 4]
+sorted(w for w in set(text1) if w.endswith('ableness'))
+import sys
+export('history', 'interactions.py')
+quit()
