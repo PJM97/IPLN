@@ -53,6 +53,31 @@ def filterLine(line):
 def filterMatrix(matrix):
     return list(map(filterLine,matrix))
 
+"""
+    Agora temos de tratar de relações.
+    Podemos indicar que os nomes podem relacionar-se com outros nomes.
+    depois temos o caso geral de dois nomes relacionarem-se a partir de um verbo.
+"""
+
+"""
+    Tuplos para representar relacao de nome com nome.
+"""
+def filter_name_bigrams(line):
+    nomes=[]
+    for i in range (len(line)-1):
+        if((line[i][1]=='N' or line[i][1]=='NPROP') and (line[i+1][1]=='N' or line[i+1][1]=='NPROP')):
+            nomes.append((line[i][0],line[i+1][0]))
+    print("names bigrams:")
+    print(nomes)        
+
+def filter_trigram_relations(line):
+    tri=[]
+    for i in range (len(line)-2):
+        if((line[i][1]=='N' or line[i][1]=='NPROP') and (line[i+1][1]=='V') and (line[i+2][1]=='N' or line[i+2][1]=='NPROP')):
+            tri.append((line[i][0],line[i+1][0],line[i+2][0]))
+    print("Trigrams:")
+    print(tri)
+
 
 def main():
 
@@ -63,8 +88,13 @@ def main():
     sent_Matrix=getSentenses(corpus) #matrix, cada linha é uma frase.
 
     grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matix tuplos:(word,grammar)
+    #print(grammar_Matrix)
     filtered_gm=filterMatrix(grammar_Matrix)    #filtered: names and verbs only.
-    print(filtered_gm)
+    #print(filtered_gm)
+    fst_sentense=filtered_gm[0]
+    print(fst_sentense)
+    filter_name_bigrams(fst_sentense)
+    filter_trigram_relations(fst_sentense)
 
 if __name__ == "__main__":
     main()    
