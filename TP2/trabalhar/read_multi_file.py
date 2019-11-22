@@ -1,4 +1,4 @@
-from nltk.corpus.reader.plaintext import PlaintextCorpusReader
+from nltk.corpus.reader.plaintext import PlaintextCorpusReader 
 
     
 

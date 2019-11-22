@@ -1,0 +1,369 @@
+import numpy
+quit
+quit()
+import numpy as np
+quit()
+import tensorflow
+quit()
+pip3 install ipython
+quit()
+print("Dab")
+quit()
+>>> import os
+>>> from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+>>> from cryptography.hazmat.backends import default_backend
+>>> backend = default_backend()
+>>> key = os.urandom(32)
+>>> iv = os.urandom(16)
+>>> cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+>>> encryptor = cipher.encryptor()
+>>> ct = encryptor.update(b"a secret message") + encryptor.finalize()
+>>> decryptor = cipher.decryptor()
+>>> decryptor.update(ct) + decryptor.finalize()
+cl
+quit()
+from pronto import Ontology
+go = Ontology("tests/data/go.obo.gz")
+cl = Ontology("http://purl.obolibrary.org/obo/cl.obo")
+stato = Ontology.from_obo_library("stato.owl")
+cl['CL:0002116']
+edam = Ontology("http://edamontology.org/EDAM.owl")
+with open("edam.obo", "wb") as f:
+ edam.dump(f, format="obo")
+ms = Ontology("ms.obo")
+quit()
+from nltk.examples.pt import *
+import nltk
+nltk.download()
+from nltk.book import *
+text1
+text1.concordance("monstrous")
+text4.dispersion_plot(["citizens", "democracy", "freedom", "duties", "America"])
+import matplotlib
+quit()
+from nltk.book import *
+import matplotlib
+text4.dispersion_plot(["citizens", "democracy", "freedom", "duties", "America"])
+len(text3)
+sent1 = ['Call', 'me', 'Ishmael', '.']
+sent1
+len(sent1)
+ 	
+>>> def lexical_diversity(text): [1]
+def lexical_diversity(text):
+return len(set(text)) / len(text)
+def lexical_diversity(text):
+	return len(set(text)) / len(text)
+lexical_diversity(sent1)
+sent2
+sent3
+['Monty', 'Python'] + ['and', 'the', 'Holy', 'Grail']
+sent4 + sent1
+sent1.append("Some")
+sent1
+text4[173]
+text4.index('awaken')
+ext5[16715:16735]
+text5[16715:16735]
+sent = ['word1', 'word2', 'word3', 'word4', 'word5',
+...         'word6', 'word7', 'word8', 'word9', 'word10']
+sent = ['word1', 'word2', 'word3', 'word4', 'word5','word6', 'word7', 'word8', 'word9', 'word10']
+sent
+sent[0]
+sent[9]
+sent[5:8]
+sent[:3]
+text2[141525:]
+sent
+sent[0]= 'First'
+sent
+sent1 = ['Call', 'me', 'Ishmael', '.']
+sent1
+clear = lambda: os.system('clear')
+clear
+import os
+clear = lambda: os.system('clear')
+clear
+my_sent = ['Bravely', 'bold', 'Sir', 'Robin', ',', 'rode',
+'forth', 'from', 'Camelot', '.']
+noun_phrase = my_sent[1:4]
+noun_phrase
+saying = ['After', 'all', 'is', 'said', 'and', 'done',
+'more', 'is', 'said', 'than', 'done']
+saying
+tokens = set(saying)
+tokens
+tokens = sorted(tokens)
+tokens
+fdist1 = FreqDist(text1)
+fdist1
+fdist1.most_common(50)
+fdist1
+type(fdist1)
+text1
+type(text1)
+V = set(text1)
+long_words = [w for w in V if len(w) > 15]
+sorted(long_words)
+fdist5 = FreqDist(text5)
+sorted(w for w in set(text5) if len(w) > 7 and fdist5[w] > 7)
+list(bigrams(['more', 'is', 'said', 'than', 'done']))
+text4.collocations()
+sent7
+[w for w in sent7 if len(w) < 4]
+sorted(w for w in set(text1) if w.endswith('ableness'))
+import sys
+export('history', 'interactions.py')
+quit()
+import nltk
+nltk.corpus.gutenberg.fileids()
+mma = nltk.corpus.gutenberg.words('austen-emma.txt')
+mma
+len(emma)
+len(mma)
+emma = nltk.corpus.gutenberg.words('austen-emma.txt')
+len(emma)
+from nltk.corpus import gutenberg
+gutenberg.fileids()
+emma = gutenberg.words('austen-emma.txt')
+quit()
+import nltk
+nltk.corpus.gutenberg.fileids()
+emma = nltk.corpus.gutenberg.words('austen-emma.txt')
+emma
+len(emma)
+emma = nltk.Text(nltk.corpus.gutenberg.words('austen-emma.txt'))
+emma.concordance("surprize")
+from nltk.corpus import gutenberg
+gutenberg.fileids()
+emma = gutenberg.words('austen-emma.txt')
+emma
+for fileid in gutenberg.fileids():
+	num_chars = len(gutenberg.raw(fileid))
+	num_words = len(gutenberg.words(fileid))
+	num_sents = len(gutenberg.sents(fileid))
+	num_vocab = len(set(w.lower() for w in gutenberg.words(fileid)))
+	print(round(num_chars/num_words), round(num_words/num_sents), round(num_words/num_vocab), fileid)
+macbeth_sentences = gutenberg.sents('shakespeare-macbeth.txt')
+macbeth_sentences
+macbeth_sentences[1116]
+longest_len = max(len(s) for s in macbeth_sentences)
+[s for s in macbeth_sentences if len(s) == longest_len]
+from nltk.corpus import webtext
+for fileid in webtext.fileids():
+	print(fileid, webtext.raw(fileid)[:65], '...')
+from nltk.corpus import nps_chat
+chatroom = nps_chat.posts('10-19-20s_706posts.xml')
+chatroom[123]
+from nltk.corpus import brown
+brown.categories()
+brown.words(categories='news')
+brown.words(fileids=['cg22'])
+brown.sents(categories=['news', 'editorial', 'reviews'])
+from nltk.corpus import brown
+news_text = brown.words(categories='news')
+fdist = nltk.FreqDist(w.lower() for w in news_text)
+modals = ['can', 'could', 'may', 'might', 'must', 'will']
+for m in modals:
+	print(m + ':', fdist[m], end=' ')
+cfd = nltk.ConditionalFreqDist(
+	(genre, word)
+	for genre in brown.categories()
+	for word in brown.words(categories=genre))
+genres = ['news', 'religion', 'hobbies', 'science_fiction', 'romance', 'humor']
+modals = ['can', 'could', 'may', 'might', 'must', 'will']
+cfd.tabulate(conditions=genres, samples=modals)
+reuters.categories('training/9865')
+reuters.categories(['training/9865', 'training/9880'])
+from nltk.corpus import reuters
+reuters.categories(['training/9865', 'training/9880'])
+reuters.fileids('barley')
+reuters.fileids(['barley', 'corn'])
+ reuters.words('training/9865')[:14]
+reuters.words('training/9865')[:14]
+reuters.words(['training/9865', 'training/9880'])
+reuters.words(categories='barley')
+reuters.words(categories=['barley', 'corn'])
+from nltk.corpus import inaugural
+inaugural.fileids()
+[fileid[:4] for fileid in inaugural.fileids()]
+cfd = nltk.ConditionalFreqDist(
+	(target, fileid[:4])
+	for fileid in inaugural.fileids()
+	for w in inaugural.words(fileid)
+	for target in ['america', 'citizen']
+	if w.lower().startswith(target))
+cfd.plot()
+nltk.corpus.cess_esp.words()
+import nltk
+nltk.download('cess_esp')
+nltk.corpus.cess_esp.words()
+nltk.corpus.floresta.words()
+nltk.download('floresta')
+nltk.corpus.floresta.words()
+nltk.corpus.indian.words('hindi.pos')
+nltk.download('indian')
+nltk.corpus.indian.words('hindi.pos')
+nltk.corpus.udhr.fileids()
+nltk.corpus.udhr.words('Javanese-Latin1')[11:]
+from nltk.corpus import udhr
+languages = ['Chickasaw', 'English', 'German_Deutsch',
+'Greenlandic_Inuktikut', 'Hungarian_Magyar', 'Ibibio_Efik']
+cfd = nltk.ConditionalFreqDist(
+	(lang, len(word))
+	for lang in languages
+	for word in udhr.words(lang + '-Latin1'))
+cfd.plot(cumulative=True)
+raw = gutenberg.raw("burgess-busterbrown.txt")
+raw[1:20]
+words = gutenberg.words("burgess-busterbrown.txt")
+words[1:20]
+sents = gutenberg.sents("burgess-busterbrown.txt")
+sents[1:20]
+from nltk.corpus import PlaintextCorpusReader
+corpus_root = '/usr/share/dict'
+wordlists = PlaintextCorpusReader(corpus_root, '.*')
+wordlists.fileids()
+wordlists.words('connectives')
+from nltk.corpus import BracketParseCorpusReader
+corpus_root = r"C:\corpora\penntreebank\parsed\mrg\wsj"
+file_pattern = r".*/wsj_.*\.mrg"
+ptb = BracketParseCorpusReader(corpus_root, file_pattern)
+from nltk.corpus import brown
+cfd = nltk.ConditionalFreqDist(
+	(genre, word)
+	for genre in brown.categories()
+	for word in brown.words(categories=genre))
+genre_word = [(genre, word)
+	for genre in ['news', 'romance']
+	for word in brown.words(categories=genre)]
+len(genre_word)
+genre_word[:4]
+genre_word[-4:]
+cfd = nltk.ConditionalFreqDist(genre_word)
+cfd.conditions()
+print(cfd['news'])
+print(cfd['romance'])
+cfd['romance'].most_common(20)
+cfd['romance']['could']
+from nltk.corpus import inaugural
+cfd = nltk.ConditionalFreqDist(
+	(target, fileid[:4])
+	for fileid in inaugural.fileids()
+	for w in inaugural.words(fileid)
+	for target in ['america', 'citizen']
+	if w.lower().startswith(target))
+from nltk.corpus import udhr
+languages = ['Chickasaw', 'English', 'German_Deutsch',
+'Greenlandic_Inuktikut', 'Hungarian_Magyar', 'Ibibio_Efik']
+cfd = nltk.ConditionalFreqDist(
+	(lang, len(word))
+	for lang in languages
+	for word in udhr.words(lang + '-Latin1'))
+cfd.tabulate(conditions=['English', 'German_Deutsch'],
+	samples=range(10), cumulative=True)
+sent = ['In', 'the', 'beginning', 'God', 'created', 'the', 'heaven',
+'and', 'the', 'earth', '.']
+list(nltk.bigrams(sent))
+	
+def generate_model(cfdist, word, num=15):
+	for i in range(num):
+		print(word, end=' ')
+		word = cfdist[word].max()
+text = nltk.corpus.genesis.words('english-kjv.txt')
+bigrams = nltk.bigrams(text)
+cfd = nltk.ConditionalFreqDist(bigrams)
+cfd['living']
+generate_model(cfd, 'living')
+from __future__ import division
+def lexical_diversity(text):
+	return len(text) / len(set(text))
+def lexical_diversity(my_text_data):
+	word_count = len(my_text_data)
+	vocab_size = len(set(my_text_data))
+	diversity_score = vocab_size / word_count
+	return diversity_score
+from nltk.corpus import genesis
+kjv = genesis.words('english-kjv.txt')
+lexical_diversity(kjv)
+def plural(word):
+	if word.endswith('y'):
+		return word[:-1] + 'ies'
+	elif word[-1] in 'sx' or word[-2:] in ['sh', 'ch']:
+		return word + 'es'
+	elif word.endswith('an'):
+		return word[:-2] + 'en'
+	else:
+		return word + 's'
+plural('fairy')
+plural('woman')
+from text_proc import plural
+plural('wish')
+plural('fan')
+def unusual_words(text):
+	text_vocab = set(w.lower() for w in text if w.isalpha())
+	english_vocab = set(w.lower() for w in nltk.corpus.words.words())
+	unusual = text_vocab - english_vocab
+	return sorted(unusual)
+unusual_words(nltk.corpus.gutenberg.words('austen-sense.txt'))
+unusual_words(nltk.corpus.nps_chat.words())
+from nltk.corpus import stopwords
+stopwords.words('english')
+def content_fraction(text):
+	stopwords = nltk.corpus.stopwords.words('english')
+	content = [w for w in text if w.lower() not in stopwords]
+	return len(content) / len(text)
+content_fraction(nltk.corpus.reuters.words())
+puzzle_letters = nltk.FreqDist('egivrvonl')
+obligatory = 'r'
+wordlist = nltk.corpus.words.words()
+[w for w in wordlist if len(w) >= 6
+	and obligatory in w
+	and nltk.FreqDist(w) <= puzzle_letters]
+names = nltk.corpus.names
+names.fileids()
+male_names = names.words('male.txt')
+female_names = names.words('female.txt')
+[w for w in male_names if w in female_names]
+cfd = nltk.ConditionalFreqDist(
+(fileid, name[-1])
+for fileid in names.fileids()
+for name in names.words(fileid))
+cfd.plot()
+entries = nltk.corpus.cmudict.entries()
+len(entries)
+for entry in entries[42371:42379]:
+	print(entry)
+for word, pron in entries:
+	if len(pron) == 3:
+		ph1, ph2, ph3 = pron
+	if ph1 == 'P' and ph3 == 'T':
+		print(word, ph2, end=' ')
+syllable = ['N', 'IH0', 'K', 'S']
+[word for word, pron in entries if pron[-4:] == syllable]
+[w for w, pron in entries if pron[-1] == 'M' and w[-1] == 'n']
+sorted(set(w[:2] for w, pron in entries if pron[0] == 'N' and w[0] != 'n'))
+def stress(pron):
+	return [char for phone in pron for char in phone if char.isdigit()]
+[w for w, pron in entries if stress(pron) == ['0', '1', '0', '2', '0']]
+[w for w, pron in entries if stress(pron) == ['0', '2', '0', '1', '0']]
+p3 = [(pron[0]+'-'+pron[2], word)
+for (word, pron) in entries
+if pron[0] == 'P' and len(pron) == 3]
+p3
+cfd = nltk.ConditionalFreqDist(p3)
+for template in sorted(cfd.conditions()):
+	if len(cfd[template]) > 10:
+		words = sorted(cfd[template])
+		wordstring = ' '.join(words)
+		
+		print(template, wordstring[:70] + "...")
+prondict = nltk.corpus.cmudict.dict()
+prondict['fire']
+prondict['blog']
+prondict['blog'] = [['B', 'L', 'AA1', 'G']]
+prondict['blog']
+text = ['natural', 'language', 'processing']
+[ph for w in text for ph in prondict[w][0]]
+fr2en = swadesh.entries(['fr', 'en'])
+quit()
