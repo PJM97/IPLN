@@ -13,9 +13,9 @@ def getALLFile():
     return corpus
 
 #Parse a specific file.
-def getFromOneFile(fname):
+def getFromOneFile(path,fname):
     try:
-        corpus=nltk.corpus.reader.plaintext.PlaintextCorpusReader(".",fname)
+        corpus=nltk.corpus.reader.plaintext.PlaintextCorpusReader(path,fname)
     except:
         sys.exit("Can't open input file")   
     return corpus 
@@ -47,7 +47,8 @@ stopwords = nltk.corpus.stopwords.words('portuguese')
 
 #filtrar nomes e verbos.
 def filterLine(line):
-    return list(filter(lambda y: (y[1]=='V' or y[1]=='N' or y[1]=='NPROP') and (y[0] not in stopwords or y[1]=='V'), line))
+    return  list(filter(lambda y: (y[1]=='V' or y[1]=='N' or y[1]=='NPROP')
+             and (y[0] not in stopwords or y[1]=='V'), line)) #stopword que tb é verbo fica.
 
 def filterMatrix(matrix):
     return list(map(filterLine,matrix))
@@ -56,7 +57,7 @@ def filterMatrix(matrix):
 def main():
 
     tagger = getTagger()
-    corpus=getFromOneFile("input.txt")
+    corpus=getFromOneFile(".","input.txt")
     #corpus=getALLFile()
 
     sent_Matrix=getSentenses(corpus) #matrix, cada linha é uma frase.
