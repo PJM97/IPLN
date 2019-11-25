@@ -4,7 +4,7 @@ from pickle import dump
 
 
 """
-    Este codigo vai ser só preciso correr uma vez, o objetivo 
+    Esta script vai ser só corrida uma vez, o objetivo 
     é treinar a rede para depois podermos identificar gramatica em portugues, nomes, verbos etc...
 """
 

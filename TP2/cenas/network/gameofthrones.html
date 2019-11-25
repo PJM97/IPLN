@@ -1,0 +1,209 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 750px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+        #loadingBar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width: 100%;
+            height: 750px;
+            background-color:rgba(200,200,200,0.8);
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            opacity:1;
+        }
+
+        #bar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:20px;
+            height:20px;
+            margin:auto auto auto auto;
+            border-radius:11px;
+            border:2px solid rgba(30,30,30,0.05);
+            background: rgb(0, 173, 246); /* Old browsers */
+            box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+        }
+
+        #border {
+            position:absolute;
+            top:10px;
+            left:10px;
+            width:500px;
+            height:23px;
+            margin:auto auto auto auto;
+            box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+            border-radius:10px;
+        }
+
+        #text {
+            position:absolute;
+            top:8px;
+            left:530px;
+            width:30px;
+            height:50px;
+            margin:auto auto auto auto;
+            font-size:22px;
+            color: #000000;
+        }
+
+        div.outerBorder {
+            position:relative;
+            top:400px;
+            width:600px;
+            height:44px;
+            margin:auto auto auto auto;
+            border:8px solid rgba(0,0,0,0.1);
+            background: rgb(252,252,252); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+            border-radius:72px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+<div id="loadingBar">
+    <div class="outerBorder">
+        <div id="text">0%</div>
+        <div id="border">
+            <div id="bar"></div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "id": "Aemon", "label": "Aemon", "shape": "dot", "title": "Aemon Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Grenn", "label": "Grenn", "shape": "dot", "title": "Grenn Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Samwell", "label": "Samwell", "shape": "dot", "title": "Samwell Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Aerys", "label": "Aerys", "shape": "dot", "title": "Aerys Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Jaime", "label": "Jaime", "shape": "dot", "title": "Jaime Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Robert", "label": "Robert", "shape": "dot", "title": "Robert Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Tyrion", "label": "Tyrion", "shape": "dot", "title": "Tyrion Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Tywin", "label": "Tywin", "shape": "dot", "title": "Tywin Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Alliser", "label": "Alliser", "shape": "dot", "title": "Alliser Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Mance", "label": "Mance", "shape": "dot", "title": "Mance Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Amory", "label": "Amory", "shape": "dot", "title": "Amory Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Oberyn", "label": "Oberyn", "shape": "dot", "title": "Oberyn Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Arya", "label": "Arya", "shape": "dot", "title": "Arya Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Anguy", "label": "Anguy", "shape": "dot", "title": "Anguy Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Beric", "label": "Beric", "shape": "dot", "title": "Beric Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Bran", "label": "Bran", "shape": "dot", "title": "Bran Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Brynden", "label": "Brynden", "shape": "dot", "title": "Brynden Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Cersei", "label": "Cersei", "shape": "dot", "title": "Cersei Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Gendry", "label": "Gendry", "shape": "dot", "title": "Gendry Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Gregor", "label": "Gregor", "shape": "dot", "title": "Gregor Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Joffrey", "label": "Joffrey", "shape": "dot", "title": "Joffrey Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Jon", "label": "Jon", "shape": "dot", "title": "Jon Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Rickon", "label": "Rickon", "shape": "dot", "title": "Rickon Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Roose", "label": "Roose", "shape": "dot", "title": "Roose Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Sandor", "label": "Sandor", "shape": "dot", "title": "Sandor Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Thoros", "label": "Thoros", "shape": "dot", "title": "Thoros Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Balon", "label": "Balon", "shape": "dot", "title": "Balon Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Loras", "label": "Loras", "shape": "dot", "title": "Loras Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Belwas", "label": "Belwas", "shape": "dot", "title": "Belwas Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Barristan", "label": "Barristan", "shape": "dot", "title": "Barristan Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Illyrio", "label": "Illyrio", "shape": "dot", "title": "Illyrio Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Hodor", "label": "Hodor", "shape": "dot", "title": "Hodor Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Jojen", "label": "Jojen", "shape": "dot", "title": "Jojen Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Luwin", "label": "Luwin", "shape": "dot", "title": "Luwin Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Meera", "label": "Meera", "shape": "dot", "title": "Meera Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Nan", "label": "Nan", "shape": "dot", "title": "Nan Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Theon", "label": "Theon", "shape": "dot", "title": "Theon Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Brienne", "label": "Brienne", "shape": "dot", "title": "Brienne Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Bronn", "label": "Bronn", "shape": "dot", "title": "Bronn Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Podrick", "label": "Podrick", "shape": "dot", "title": "Podrick Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Lothar", "label": "Lothar", "shape": "dot", "title": "Lothar Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Walder", "label": "Walder", "shape": "dot", "title": "Walder Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Catelyn", "label": "Catelyn", "shape": "dot", "title": "Catelyn Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Edmure", "label": "Edmure", "shape": "dot", "title": "Edmure Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Hoster", "label": "Hoster", "shape": "dot", "title": "Hoster Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Jeyne", "label": "Jeyne", "shape": "dot", "title": "Jeyne Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Lysa", "label": "Lysa", "shape": "dot", "title": "Lysa Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Petyr", "label": "Petyr", "shape": "dot", "title": "Petyr Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Robb", "label": "Robb", "shape": "dot", "title": "Robb Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Roslin", "label": "Roslin", "shape": "dot", "title": "Roslin Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Sansa", "label": "Sansa", "shape": "dot", "title": "Sansa Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Stannis", "label": "Stannis", "shape": "dot", "title": "Stannis Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Elia", "label": "Elia", "shape": "dot", "title": "Elia Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Ilyn", "label": "Ilyn", "shape": "dot", "title": "Ilyn Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Meryn", "label": "Meryn", "shape": "dot", "title": "Meryn Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Pycelle", "label": "Pycelle", "shape": "dot", "title": "Pycelle Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Shae", "label": "Shae", "shape": "dot", "title": "Shae Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Varys", "label": "Varys", "shape": "dot", "title": "Varys Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Craster", "label": "Craster", "shape": "dot", "title": "Craster Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Karl", "label": "Karl", "shape": "dot", "title": "Karl Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Daario", "label": "Daario", "shape": "dot", "title": "Daario Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Drogo", "label": "Drogo", "shape": "dot", "title": "Drogo Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Irri", "label": "Irri", "shape": "dot", "title": "Irri Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Daenerys", "label": "Daenerys", "shape": "dot", "title": "Daenerys Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Aegon", "label": "Aegon", "shape": "dot", "title": "Aegon Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Jorah", "label": "Jorah", "shape": "dot", "title": "Jorah Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Kraznys", "label": "Kraznys", "shape": "dot", "title": "Kraznys Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Missandei", "label": "Missandei", "shape": "dot", "title": "Missandei Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Rakharo", "label": "Rakharo", "shape": "dot", "title": "Rakharo Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Rhaegar", "label": "Rhaegar", "shape": "dot", "title": "Rhaegar Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Viserys", "label": "Viserys", "shape": "dot", "title": "Viserys Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Worm", "label": "Worm", "shape": "dot", "title": "Worm Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Davos", "label": "Davos", "shape": "dot", "title": "Davos Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Cressen", "label": "Cressen", "shape": "dot", "title": "Cressen Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Salladhor", "label": "Salladhor", "shape": "dot", "title": "Salladhor Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Eddard", "label": "Eddard", "shape": "dot", "title": "Eddard Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Eddison", "label": "Eddison", "shape": "dot", "title": "Eddison Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Gilly", "label": "Gilly", "shape": "dot", "title": "Gilly Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Qyburn", "label": "Qyburn", "shape": "dot", "title": "Qyburn Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Renly", "label": "Renly", "shape": "dot", "title": "Renly Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Tommen", "label": "Tommen", "shape": "dot", "title": "Tommen Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Janos", "label": "Janos", "shape": "dot", "title": "Janos Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Bowen", "label": "Bowen", "shape": "dot", "title": "Bowen Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Kevan", "label": "Kevan", "shape": "dot", "title": "Kevan Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Margaery", "label": "Margaery", "shape": "dot", "title": "Margaery Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Myrcella", "label": "Myrcella", "shape": "dot", "title": "Myrcella Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Dalla", "label": "Dalla", "shape": "dot", "title": "Dalla Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Melisandre", "label": "Melisandre", "shape": "dot", "title": "Melisandre Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Orell", "label": "Orell", "shape": "dot", "title": "Orell Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Qhorin", "label": "Qhorin", "shape": "dot", "title": "Qhorin Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Rattleshirt", "label": "Rattleshirt", "shape": "dot", "title": "Rattleshirt Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Styr", "label": "Styr", "shape": "dot", "title": "Styr Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Val", "label": "Val", "shape": "dot", "title": "Val Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Ygritte", "label": "Ygritte", "shape": "dot", "title": "Ygritte Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Jon Arryn", "label": "Jon Arryn", "shape": "dot", "title": "Jon Arryn Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Lancel", "label": "Lancel", "shape": "dot", "title": "Lancel Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Olenna", "label": "Olenna", "shape": "dot", "title": "Olenna Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Marillion", "label": "Marillion", "shape": "dot", "title": "Marillion Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Robert Arryn", "label": "Robert Arryn", "shape": "dot", "title": "Robert Arryn Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Ellaria", "label": "Ellaria", "shape": "dot", "title": "Ellaria Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Mace", "label": "Mace", "shape": "dot", "title": "Mace Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Rickard", "label": "Rickard", "shape": "dot", "title": "Rickard Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Ramsay", "label": "Ramsay", "shape": "dot", "title": "Ramsay Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Chataya", "label": "Chataya", "shape": "dot", "title": "Chataya Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Shireen", "label": "Shireen", "shape": "dot", "title": "Shireen Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Doran", "label": "Doran", "shape": "dot", "title": "Doran Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "white"}, "id": "Walton", "label": "Walton", "shape": "dot", "title": "Walton Neighbors:\u003cbr\u003e", "value": 0}]);
+        edges = new vis.DataSet([]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+        network.on("stabilizationProgress", function(params) {
+      		document.getElementById('loadingBar').removeAttribute("style");
+	        var maxWidth = 496;
+	        var minWidth = 20;
+	        var widthFactor = params.iterations/params.total;
+	        var width = Math.max(minWidth,maxWidth * widthFactor);
+
+	        document.getElementById('bar').style.width = width + 'px';
+	        document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+	    });
+	    network.once("stabilizationIterationsDone", function() {
+	        document.getElementById('text').innerHTML = '100%';
+	        document.getElementById('bar').style.width = '496px';
+	        document.getElementById('loadingBar').style.opacity = 0;
+	        // really clean the dom element
+	        setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+	    });
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

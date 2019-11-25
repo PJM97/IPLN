@@ -1,0 +1,113 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 750px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "id": "Maias", "label": "Maias", "shape": "dot", "title": "Maias Neighbors:\u003cbr\u003evieram", "value": 1}, {"font": {"color": "white"}, "id": "vieram", "label": "vieram", "shape": "dot", "title": "vieram Neighbors:\u003cbr\u003ehabitar\u003cbr\u003eMaias", "value": 2}, {"font": {"color": "white"}, "id": "habitar", "label": "habitar", "shape": "dot", "title": "habitar Neighbors:\u003cbr\u003evieram", "value": 1}, {"font": {"color": "white"}, "id": "1875", "label": "1875", "shape": "dot", "title": "1875 Neighbors:\u003cbr\u003eera", "value": 1}, {"font": {"color": "white"}, "id": "era", "label": "era", "shape": "dot", "title": "era Neighbors:\u003cbr\u003evizinhan\u00e7a\u003cbr\u003e1875", "value": 2}, {"font": {"color": "white"}, "id": "vizinhan\u00e7a", "label": "vizinhan\u00e7a", "shape": "dot", "title": "vizinhan\u00e7a Neighbors:\u003cbr\u003eera", "value": 1}]);
+        edges = new vis.DataSet([{"from": "Maias", "to": "vieram", "value": 1}, {"from": "vieram", "to": "habitar", "value": 1}, {"from": "1875", "to": "era", "value": 1}, {"from": "era", "to": "vizinhan\u00e7a", "value": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

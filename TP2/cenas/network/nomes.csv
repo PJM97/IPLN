@@ -1,0 +1,16 @@
+Source,Target,Weight
+casa,Maias,1
+habitar,Lisboa,1
+Lisboa,Outono,1
+Outono,1875,1
+vizinhança,Rua,1
+Rua,S,1
+S,.,1
+.,Francisco,1
+Francisco,Paula,1
+Paula,bairro,1
+bairro,Janelas,1
+Janelas,Verdes,1
+Verdes,Casa,1
+Casa,Ramalhete,1
+Ramalhete,Ramalhete,1

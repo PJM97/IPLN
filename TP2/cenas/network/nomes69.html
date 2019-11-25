@@ -1,0 +1,113 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 750px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "id": "casa", "label": "casa", "shape": "dot", "title": "casa Neighbors:\u003cbr\u003eMaias", "value": 1}, {"font": {"color": "white"}, "id": "Maias", "label": "Maias", "shape": "dot", "title": "Maias Neighbors:\u003cbr\u003ecasa", "value": 1}, {"font": {"color": "white"}, "id": "habitar", "label": "habitar", "shape": "dot", "title": "habitar Neighbors:\u003cbr\u003eLisboa", "value": 1}, {"font": {"color": "white"}, "id": "Lisboa", "label": "Lisboa", "shape": "dot", "title": "Lisboa Neighbors:\u003cbr\u003ehabitar\u003cbr\u003eOutono", "value": 2}, {"font": {"color": "white"}, "id": "Outono", "label": "Outono", "shape": "dot", "title": "Outono Neighbors:\u003cbr\u003eLisboa\u003cbr\u003e1875", "value": 2}, {"font": {"color": "white"}, "id": "1875", "label": "1875", "shape": "dot", "title": "1875 Neighbors:\u003cbr\u003eOutono", "value": 1}, {"font": {"color": "white"}, "id": "vizinhan\u00e7a", "label": "vizinhan\u00e7a", "shape": "dot", "title": "vizinhan\u00e7a Neighbors:\u003cbr\u003eRua", "value": 1}, {"font": {"color": "white"}, "id": "Rua", "label": "Rua", "shape": "dot", "title": "Rua Neighbors:\u003cbr\u003evizinhan\u00e7a\u003cbr\u003eS", "value": 2}, {"font": {"color": "white"}, "id": "S", "label": "S", "shape": "dot", "title": "S Neighbors:\u003cbr\u003e.\u003cbr\u003eRua", "value": 2}, {"font": {"color": "white"}, "id": ".", "label": ".", "shape": "dot", "title": ". Neighbors:\u003cbr\u003eS\u003cbr\u003eFrancisco", "value": 2}, {"font": {"color": "white"}, "id": "Francisco", "label": "Francisco", "shape": "dot", "title": "Francisco Neighbors:\u003cbr\u003ePaula\u003cbr\u003e.", "value": 2}, {"font": {"color": "white"}, "id": "Paula", "label": "Paula", "shape": "dot", "title": "Paula Neighbors:\u003cbr\u003ebairro\u003cbr\u003eFrancisco", "value": 2}, {"font": {"color": "white"}, "id": "bairro", "label": "bairro", "shape": "dot", "title": "bairro Neighbors:\u003cbr\u003ePaula\u003cbr\u003eJanelas", "value": 2}, {"font": {"color": "white"}, "id": "Janelas", "label": "Janelas", "shape": "dot", "title": "Janelas Neighbors:\u003cbr\u003ebairro\u003cbr\u003eVerdes", "value": 2}, {"font": {"color": "white"}, "id": "Verdes", "label": "Verdes", "shape": "dot", "title": "Verdes Neighbors:\u003cbr\u003eJanelas\u003cbr\u003eCasa", "value": 2}, {"font": {"color": "white"}, "id": "Casa", "label": "Casa", "shape": "dot", "title": "Casa Neighbors:\u003cbr\u003eVerdes\u003cbr\u003eRamalhete", "value": 2}, {"font": {"color": "white"}, "id": "Ramalhete", "label": "Ramalhete", "shape": "dot", "title": "Ramalhete Neighbors:\u003cbr\u003eRamalhete\u003cbr\u003eCasa", "value": 2}]);
+        edges = new vis.DataSet([{"from": "casa", "to": "Maias", "value": 1}, {"from": "habitar", "to": "Lisboa", "value": 1}, {"from": "Lisboa", "to": "Outono", "value": 1}, {"from": "Outono", "to": "1875", "value": 1}, {"from": "vizinhan\u00e7a", "to": "Rua", "value": 1}, {"from": "Rua", "to": "S", "value": 1}, {"from": "S", "to": ".", "value": 1}, {"from": ".", "to": "Francisco", "value": 1}, {"from": "Francisco", "to": "Paula", "value": 1}, {"from": "Paula", "to": "bairro", "value": 1}, {"from": "bairro", "to": "Janelas", "value": 1}, {"from": "Janelas", "to": "Verdes", "value": 1}, {"from": "Verdes", "to": "Casa", "value": 1}, {"from": "Casa", "to": "Ramalhete", "value": 1}, {"from": "Ramalhete", "to": "Ramalhete", "value": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
