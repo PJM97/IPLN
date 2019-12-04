@@ -1,6 +1,7 @@
 from owlready2 import *
 import os
 import csv
+import pprint
 
 def create_file(path):
     f = open(path,"x")
@@ -69,4 +70,4 @@ save_ontology(onto)
 ############# EXEMPLOS ##############
 print(list(Word.subclasses()))
 print(list(onto.classes()))
-print(list(onto.individuals()))
+pprint.pprint(list(onto.search(type = Group)))
