@@ -1,6 +1,7 @@
 from owlready2 import *
 import os
 import csv
+import pprint
 
 def create_file(path):
     f = open(path,"x")
@@ -137,3 +138,4 @@ save_ontology(onto)
 print(list(Word.subclasses()))
 print(Name.is_a)
 print(Name.has_verb)
+pprint.pprint(list(onto.search(type = Name)))
