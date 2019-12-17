@@ -4,10 +4,11 @@ from pickle import dump
 
 
 """
-    Esta script vai ser só corrida uma vez, o objetivo 
-    é treinar a rede para depois podermos identificar gramatica em portugues, nomes, verbos etc...
+    Esta script que gera o ficheiro mac_morpho.pkl
+    Este ficheiro permite identificar componentes gramaticais sobre uma palavra, pontuação, etc...
 """
 
+#Treino
 tagged_sents = nltk.corpus.mac_morpho.tagged_sents()
 t0 = nltk.DefaultTagger('N')
 t1 = nltk.UnigramTagger(tagged_sents, backoff=t0)
@@ -17,7 +18,7 @@ t3 = nltk.TrigramTagger(tagged_sents, backoff=t2)
 
 t3_alt = nltk.TrigramTagger(tagged_sents)
 
-
+#Escrita do resultado do treino em Ficheiro.
 output = open('mac_morpho.pkl', 'wb')
 dump(t3, output, -1)
 output.close()

@@ -8,11 +8,29 @@ import json
 from collections import Counter
 import csv
 
+
 """
-Este codigo todo abre um ou multiplos ficheiros,
-filtra o conteudo de modo a calcular relaçoes existentes entre nome-nome e nome-verbo-nome.
-Armazena no resultado em ficheiros json.
+        _________________
+        |   Enunciado   |
+        |_______________|
+        
+Anotar o texto com linguakit, freeling, spacy, nltk, conll,...
+Dado o texto anotado e umas regras (Padrão, Ação) criar triplos de informação extraída
+Fazer um sistema de regras onde de alguma maneira pode-se dizer “quero procurar o padrão "Nome, ..."".
+Exemplo de padrão:
+
+grep -Po ’verde e \w+’ JornalAngolano.txt (ficheiro no natura jj)
+
+Output: verde e branco; verde e amarelo
+
+Os triplos de informação extraída deverão estar relacionados com o texto e com padrão dado como input
+
+Exemplos de padrões: Adj NP ; Adj Adj N ; ...
+
+Mais avançado: Pode ser um adjetivo concreto ou um adjetivo qualquer (lemma)
 """
+
+
 
 #Parse all .txt file from one directory
 def getALLFile():
@@ -144,6 +162,7 @@ def main():
 
     #get file and grammar
     tagger = getTagger()
+
     corpus=getFromOneFile(".","input.txt")
     #corpus=getALLFile()    #para dar parse de multiplos files.
 
@@ -151,9 +170,6 @@ def main():
 
     grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matix tuplos:(word,grammar)
     filtered_gm=filterMatrix(grammar_Matrix)    #filtered: names and verbs only.
-    
-
-
     
     #bi e tri-gramas.
     bigram=[]
@@ -170,35 +186,13 @@ def main():
     nomes_weight=weigthCounter(bigram)
     verbs_weight=weigthCounter(tri_two)
     
-    save_csv('nomes.csv',nomes_weight)
-    save_csv('verbs.csv',verbs_weight)
-    
     #dicionario
     #res_dic=dic_names(bigram)
     #res_verb=dic_verbs(trigram)
 
-    #json
-    #save_Relation(res_dic,"nomes.json")
-    #save_Relation(res_verb,"verbos.json")
  
 
-    """
-        Gerar csv com info do Carlos, Maria e Ramalhete
-    """
-    #tri_carlos = wordRelation('Carlos',filtered_gm)
-    #tri_two_carlos=tritotow(tri_carlos)
-    #verbs_weight_carlos=weigthCounter(tri_two_carlos)
-    #save_csv('carlos.csv',verbs_weight_carlos)
-
-    #tri_maria = wordRelation('Maria',filtered_gm)
-    #tri_two_maria=tritotow(tri_maria)
-    #verbs_weight_maria=weigthCounter(tri_two_maria)
-    #save_csv('maria.csv',verbs_weight_maria)
-
-    #tri_ramalhete = wordRelation('Ramalhete',filtered_gm)
-    #tri_two_ramalhete=tritotow(tri_ramalhete)
-    #verbs_weight_ramalhete=weigthCounter(tri_two_ramalhete)
-    #save_csv('ramalhete.csv',verbs_weight_ramalhete)
+  
 
 
 if __name__ == "__main__":
