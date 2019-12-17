@@ -8,36 +8,8 @@ import json
 from collections import Counter
 import csv
 from args import args_Parser
-
-r"""
-     __________________
-    |                  |
-    |Enunciado : Tema 1|
-    |__________________|    
- Usar o nltk 
-Dado o texto anotado e umas regras (Padrão, Ação) criar triplos de informação extraída.
- “quero procurar o padrão "Nome, ..."".
-Exemplo de padrão:
-    grep -Po ’verde e \w+’ JornalAngolano.txt (ficheiro no natura jj)
-    Output: verde e branco; verde e amarelo
-
-Os triplos de informação extraída deverão estar relacionados com o texto e com padrão dado como input
-Exemplos de padrões: Adj NP ; Adj Adj N ; ...
-Mais avançado: Pode ser um adjetivo concreto ou um adjetivo qualquer (lemma)
-
-Exemplos:
-    De coisas a fazer:
-        Encontrar triplos relacionados por um dado verbo.
-        Encontrar todas as relações com um dado verbo especifico
-
-
-Podemos para uma palavra buscar a sua anterior e a sua seguinte.    
-
-podemos fazer com varias versões:
-    Filtrado sobre o texto -> 
-
-"""
-
+import os
+from treino import treino_gram
 
 
 #Parse all .txt file from one directory
@@ -71,8 +43,12 @@ def getSentenses(corpus):
     sentences=corpus.sents()
     return sentences
 
-#get do tagger: Permite a identificação gramatical de cada uma das palavras.
+#Obter ficheiro com treino gramatical
 def getTagger():
+    #caso não exista o ficheiro é criado
+    if(not os.path.isfile('./mac_morpho.pkl')):
+        treino_gram()
+    #abrir o ficheiro.
     input = open('mac_morpho.pkl', 'rb')
     tagger = load(input)
     input.close()
@@ -169,6 +145,7 @@ def wordRelation(word,filtered_gm):
     for sentence in filtered_gm:
         trigram = trigram + filter_trigram_relations_by_word(sentence,word)
     return trigram
+
 
 
 def main():
