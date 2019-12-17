@@ -11,6 +11,7 @@ from args import args_Parser
 import os
 from treino import treino_gram
 import fileinput
+from graphics import generateHTML
 
 #Parse do ficheiro de entrada
 def getFromOneFile(path,fname):
@@ -87,6 +88,19 @@ def povoate_grams(filtered_gm):
         trigram = trigram + filter_trigram_relations(sentence)
     return bigram , trigram
 
+def povoate_Bigrams(filtered_gm):
+    bigram=[]
+    for sentence in filtered_gm:
+        bigram = bigram + filter_name_bigrams(sentence)
+    return bigram
+
+def povoate_Trigrams(filtered_gm):
+    trigram=[]
+    for sentence in filtered_gm:
+        trigram = trigram + filter_trigram_relations(sentence)
+    return trigram
+
+
 def dic_names(bigram):
     res_bi = dict((k, [v[1] for v in itr]) for k, itr in groupby( 
                                 bigram, itemgetter(0)))
@@ -142,7 +156,6 @@ def wordRelation(word,filtered_gm):
     return trigram
 
 
-
 def main():
     args=args_Parser() #obter as flags
 
@@ -156,17 +169,36 @@ def main():
     else:
         sent_Matrix = readStdIn()
     
-    print(sent_Matrix) 
-
-    """
-    Importante pro trabalho:
-        Temos aqui a matrix com as palavras e a sua correspondente valor gramatical
-    """
-    #grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matix tuplos:(word,grammar)
+    #matriz: Cada linha é uma frase e cada elemento é um tuplo (palavra,elem gramatical)
+    grammar_Matrix = list(map(tagger.tag,sent_Matrix))
     #print(grammar_Matrix)
 
+    """
+        Agora vamos tratar de cada um dos casos possiveis 
+        que o comando pode correr.
+    """
+    #caso dos nomes sem pesos
+    if(args.nomes):
+        filtered_gm=filterMatrix(grammar_Matrix) #matriz filtrada.
+        bigram = povoate_Bigrams(filtered_gm)
 
-
+        #se quiser gerar os grafos
+        if(args.graph):
+            nomes_weight=weigthCounter(bigram)
+            generateHTML(nomes_weight,args.graph)
+            #print(nomes_weight)
+            
+            
+        """   
+        #Caso haja um file output escreve os bigrams nele
+        if(args.output):
+            file = open(args.output,'w') 
+            for l in bigram:
+                file.write(str(l))
+            file.close()        
+        else:    
+            print(bigram)   #simplesmente redireciona para o stdout.
+        """
 
     #filtered_gm=filterMatrix(grammar_Matrix)    #filtered: names and verbs only.
 
