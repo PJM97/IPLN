@@ -7,7 +7,7 @@ from itertools import groupby
 import json
 from collections import Counter
 import csv
-
+from args import args_Parser
 
 r"""
      __________________
@@ -31,7 +31,10 @@ Exemplos:
         Encontrar todas as relações com um dado verbo especifico
 
 
-Podemos para uma palavra buscar a sua anterior e a sua seguinte.        
+Podemos para uma palavra buscar a sua anterior e a sua seguinte.    
+
+podemos fazer com varias versões:
+    Filtrado sobre o texto -> 
 
 """
 
@@ -169,33 +172,36 @@ def wordRelation(word,filtered_gm):
 
 
 def main():
-
+    args_Parser()
+    """
     tagger = getTagger()     #obter o tagger gramatical
     corpus=getFromOneFile(".","input.txt")  #ler input file
     #corpus=getALLFile()    #para dar parse de multiplos files.
     sent_Matrix=getSentenses(corpus) #matrix, cada linha é uma frase.
-
+    """
     """
     Importante pro trabalho:
         Temos aqui a matrix com as palavras e a sua correspondente valor gramatical
     """
-    grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matix tuplos:(word,grammar)
+    #grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matix tuplos:(word,grammar)
     #print(grammar_Matrix)
 
 
 
-   
-    filtered_gm=filterMatrix(grammar_Matrix)    #filtered: names and verbs only.
+
+    #filtered_gm=filterMatrix(grammar_Matrix)    #filtered: names and verbs only.
 
     #print(filtered_gm) #matriz filtrada pela segunda componente de cada elemento.
     
     #bi e tri-gramas.
-    bigram=[]
-    trigram=[]
-    bigram , trigram = povoate_grams(filtered_gm)
+    #bigram=[]
+    #trigram=[]
+    #bigram , trigram = povoate_grams(filtered_gm)
+    
     """
         Em Bigrams -> temos os pares de nomes consecutivos
         Em Trigrams -> temos os triplos, onde o elem do meio é um verbo.
+    """
     """
     #print(trigram)
     
@@ -215,7 +221,7 @@ def main():
     #dicionario
     #res_dic=dic_names(bigram)
     #res_verb=dic_verbs(trigram)
-
+    """
  
 
   

@@ -1,5 +1,6 @@
 import argparse
 
+
 def args_parser():
     parser = argparse.ArgumentParser(description='Processador de')
     parser.add_argument('', metavar='Dab', type=str, nargs='+',
