@@ -10,18 +10,9 @@ import csv
 from args import args_Parser
 import os
 from treino import treino_gram
+import fileinput
 
-
-#Parse all .txt file from one directory
-def getALLFile():
-    try:
-        corpus = nltk.corpus.reader.plaintext.PlaintextCorpusReader(".", r".*\.txt")
-    except:
-        sys.exit("Can't open input file")  
-    return corpus
-
-
-#Parse a specific file.
+#Parse do ficheiro de entrada
 def getFromOneFile(path,fname):
     try:
         corpus=nltk.corpus.reader.plaintext.PlaintextCorpusReader(path,fname)
@@ -29,15 +20,6 @@ def getFromOneFile(path,fname):
         sys.exit("Can't open input file")   
     return corpus 
 
-#separa cada um dos paragrafos
-def getParagraph(corpus):
-    paragraphs=corpus.paras()
-    return paragraphs
-
-#separa cada uma das palavras
-def getWords(corpus):
-    words=corpus.words()
-    return words
 #separa cada uma das frases
 def getSentenses(corpus):
     sentences=corpus.sents()
@@ -49,13 +31,26 @@ def getTagger():
     if(not os.path.isfile('./mac_morpho.pkl')):
         treino_gram()
     #abrir o ficheiro.
-    input = open('mac_morpho.pkl', 'rb')
-    tagger = load(input)
-    input.close()
-    return tagger
+    try:
+        input = open('mac_morpho.pkl', 'rb')
+        tagger = load(input)
+        input.close()
+    except:
+        sys.exit("Can't open input file")
+
+    return tagger        
+
+#Matrix com as linhas do texto caso seja lido pelo stdin.
+def readStdIn():
+    lista=[]
+    for line in fileinput.input():
+        lista.append(line)
+    matrix=list(map(lambda x: x.rstrip().split(),lista)) #retirar \n e separar as palavras
+    return matrix 
 
 #get all portuguese stopwords.
 stopwords = nltk.corpus.stopwords.words('portuguese')
+
 
 #filtrar nomes e verbos de cada linha.
 def filterLine(line):
@@ -149,13 +144,20 @@ def wordRelation(word,filtered_gm):
 
 
 def main():
-    args_Parser()
-    """
-    tagger = getTagger()     #obter o tagger gramatical
-    corpus=getFromOneFile(".","input.txt")  #ler input file
-    #corpus=getALLFile()    #para dar parse de multiplos files.
-    sent_Matrix=getSentenses(corpus) #matrix, cada linha é uma frase.
-    """
+    args=args_Parser() #obter as flags
+
+    tagger = getTagger() #obter o tagger gramatical
+
+    #caso seja passado um file como argumento
+    if(args.input):
+        corpus=getFromOneFile(".",args.input)
+        sent_Matrix=getSentenses(corpus)   
+    #Caso de ler do stdin 
+    else:
+        sent_Matrix = readStdIn()
+    
+    print(sent_Matrix) 
+
     """
     Importante pro trabalho:
         Temos aqui a matrix com as palavras e a sua correspondente valor gramatical
