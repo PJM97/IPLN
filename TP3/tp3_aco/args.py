@@ -6,5 +6,5 @@ def args_Parser():
     parser.add_argument("-o","--output", help="Indicar o ficheiro output")
     parser.add_argument("-v","--verbs",action='store_true', help="Indicar relações com verbos")
     parser.add_argument("-n","--nomes",action='store_true', help="Indicar relações com nomes")
+    parser.add_argument("-p","--palavra", help="Indicar relações com esta palavra")
     return parser.parse_args()
-#testar é depois args.input por exemplo

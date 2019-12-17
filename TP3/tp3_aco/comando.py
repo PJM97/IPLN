@@ -4,9 +4,7 @@ from pickle import load
 from collections import defaultdict 
 from operator import itemgetter 
 from itertools import groupby 
-import json
 from collections import Counter
-import csv
 from args import args_Parser
 import os
 from treino import treino_gram
@@ -21,6 +19,14 @@ def getFromOneFile(path,fname):
         sys.exit("Can't open input file")   
     return corpus 
 
+#Matrix com as linhas do texto caso seja lido pelo stdin.
+def readStdIn():
+    lista=[]
+    for line in fileinput.input():
+        lista.append(line)
+    matrix=list(map(lambda x: x.rstrip().split(),lista)) #retirar \n e separar as palavras
+    return matrix 
+
 #separa cada uma das frases
 def getSentenses(corpus):
     sentences=corpus.sents()
@@ -31,7 +37,6 @@ def getTagger():
     #caso não exista o ficheiro é criado
     if(not os.path.isfile('./mac_morpho.pkl')):
         treino_gram()
-    #abrir o ficheiro.
     try:
         input = open('mac_morpho.pkl', 'rb')
         tagger = load(input)
@@ -41,17 +46,8 @@ def getTagger():
 
     return tagger        
 
-#Matrix com as linhas do texto caso seja lido pelo stdin.
-def readStdIn():
-    lista=[]
-    for line in fileinput.input():
-        lista.append(line)
-    matrix=list(map(lambda x: x.rstrip().split(),lista)) #retirar \n e separar as palavras
-    return matrix 
-
 #get all portuguese stopwords.
 stopwords = nltk.corpus.stopwords.words('portuguese')
-
 
 #filtrar nomes e verbos de cada linha.
 def filterLine(line):
@@ -62,9 +58,6 @@ def filterLine(line):
 def filterMatrix(matrix):
     return list(map(filterLine,matrix))
 
-"""
-    Tuplos para representar relacao de nome com nome.
-"""
 def filter_name_bigrams(line):
     nomes=[]
     for i in range (len(line)-1):
@@ -100,23 +93,6 @@ def povoate_Trigrams(filtered_gm):
         trigram = trigram + filter_trigram_relations(sentence)
     return trigram
 
-
-def dic_names(bigram):
-    res_bi = dict((k, [v[1] for v in itr]) for k, itr in groupby( 
-                                bigram, itemgetter(0)))
-    return res_bi 
-
-def dic_verbs(trigram):
-    res_tri = defaultdict(list) 
-    for i in trigram:
-        res_tri[i[1]].append({'in_name':i[0],'out_name':i[2]})
-    return dict(res_tri)
-
-def save_Relation(dic,fn):
-    with open(fn, 'w', encoding='utf8') as json_file:
-        json.dump(dic, json_file, indent=4, ensure_ascii=False)
-
-
 #list of triples to tuples.
 def tritotow(tri):
     tri_res=[]
@@ -125,22 +101,11 @@ def tritotow(tri):
         tri_res.append((t[1],t[2]))
     return tri_res
 
-
 #graph weight counter.
 def weigthCounter(list):
     contado = Counter(list)
     list_graph = [(k[0],k[1],v) for k, v in contado.items()]
     return list_graph
-
-
-def save_csv(file,list):
-    with open(file, 'w') as f:
-        fieldnames = ['Source', 'Target', 'Weight']
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        writer = csv.writer(f, delimiter=',')
-        writer.writerows(list)
-
 
 def filter_trigram_relations_by_word(line,word):
     tri=[]
@@ -155,88 +120,67 @@ def wordRelation(word,filtered_gm):
         trigram = trigram + filter_trigram_relations_by_word(sentence,word)
     return trigram
 
-
 def main():
     args=args_Parser() #obter as flags
+    tagger = getTagger() #obter gramatica
 
-    tagger = getTagger() #obter o tagger gramatical
-
-    #caso seja passado um file como argumento
-    if(args.input):
+    if(args.input): #input file
         corpus=getFromOneFile(".",args.input)
         sent_Matrix=getSentenses(corpus)   
-    #Caso de ler do stdin 
-    else:
+    else:   #stdin
         sent_Matrix = readStdIn()
     
-    #matriz: Cada linha é uma frase e cada elemento é um tuplo (palavra,elem gramatical)
-    grammar_Matrix = list(map(tagger.tag,sent_Matrix))
-    #print(grammar_Matrix)
+    grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matriz gramaticalmente notada
 
-    """
-        Agora vamos tratar de cada um dos casos possiveis 
-        que o comando pode correr.
-    """
-    #caso dos nomes sem pesos
-    if(args.nomes):
-        filtered_gm=filterMatrix(grammar_Matrix) #matriz filtrada.
+    if(args.nomes): #relações com todos os nomes
+        filtered_gm=filterMatrix(grammar_Matrix)
         bigram = povoate_Bigrams(filtered_gm)
 
-        #se quiser gerar os grafos
-        if(args.graph):
+        if(args.graph): #caso gerar grafo output
             nomes_weight=weigthCounter(bigram)
-            generateHTML(nomes_weight,args.graph)
-            #print(nomes_weight)
-            
-            
-        """   
-        #Caso haja um file output escreve os bigrams nele
-        if(args.output):
+            generateHTML(nomes_weight,args.graph)            
+
+        if(args.output):    #guardar em ficheiro
             file = open(args.output,'w') 
             for l in bigram:
                 file.write(str(l))
             file.close()        
-        else:    
-            print(bigram)   #simplesmente redireciona para o stdout.
-        """
+        else:    #stdout
+            print(bigram) 
+        
+    elif(args.verbs):   #trigramas de palavra-verb-palavra
+            filtered_gm=filterMatrix(grammar_Matrix)
+            trigram = povoate_Trigrams(filtered_gm)
+            
+            if(args.graph): #caso de gerar grafo
+                tri_two=tritotow(trigram)
+                verbs_weight=weigthCounter(tri_two)
+                generateHTML(verbs_weight,args.graph)
+            if(args.output):
+                file = open(args.output,'w') 
+                for l in trigram:
+                    file.write(str(l))
+                file.close()        
+            else:
+                print(trigram)
 
-    #filtered_gm=filterMatrix(grammar_Matrix)    #filtered: names and verbs only.
+    elif(args.palavra):
+            filtered_gm=filterMatrix(grammar_Matrix) 
+            tri_palavra = wordRelation(args.palavra,filtered_gm)
 
-    #print(filtered_gm) #matriz filtrada pela segunda componente de cada elemento.
+            if(args.graph):
+                tri_two_palavra=tritotow(tri_palavra)
+                verbs_weight_palavra=weigthCounter(tri_two_palavra)
+                generateHTML(verbs_weight_palavra,args.graph)
+
+            if(args.output):
+                file = open(args.output,'w')
+                for l in tri_palavra:
+                    file.write(str(l))
+                file.close()        
+            else:
+                print(tri_palavra) 
+
     
-    #bi e tri-gramas.
-    #bigram=[]
-    #trigram=[]
-    #bigram , trigram = povoate_grams(filtered_gm)
-    
-    """
-        Em Bigrams -> temos os pares de nomes consecutivos
-        Em Trigrams -> temos os triplos, onde o elem do meio é um verbo.
-    """
-    """
-    #print(trigram)
-    
-    #print(bigram)
-    #print(trigram)
-
-    #separar os trigramas.
-    #Exemplo:('Maias', 'vieram','habitar') -> ('Maias', 'vieram'), ('vieram', 'habitar')
-    tri_two=tritotow(trigram)
-    #print(tri_two)
-    
-    nomes_weight=weigthCounter(bigram)  #gera trigram com o weight na ultima componete
-    #print(nomes_weight)
-    
-    verbs_weight=weigthCounter(tri_two)
-    print(verbs_weight)
-    #dicionario
-    #res_dic=dic_names(bigram)
-    #res_verb=dic_verbs(trigram)
-    """
- 
-
-  
-
-
 if __name__ == "__main__":
     main()    
