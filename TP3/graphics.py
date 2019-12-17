@@ -9,7 +9,6 @@ def generateHTML(lista,fo):
  
    
     for e in lista:
-        print(e[0],e[1],e[2])
         src = e[0]
         dst = e[1]
         w = e[2]
