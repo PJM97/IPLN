@@ -11,9 +11,4 @@ def args_Parser():
     return parser.parse_args()
 
 
-def main():
-    args= args_Parser()
-    print(args.regex)
-    
-if __name__ == "__main__":
-    main()    
+ 

@@ -10,6 +10,7 @@ import os
 from treino import treino_gram
 import fileinput
 from graphics import generateHTML
+import re
 
 #Parse do ficheiro de entrada
 def getFromOneFile(path,fname):
@@ -122,9 +123,27 @@ def wordRelation(word,filtered_gm):
         trigram = trigram + filter_trigram_relations_by_word(sentence,word)
     return trigram
 
+def filterRegEx(t,ar):
+    regEx1=ar[0]
+    regEx2=ar[1]
+    regEx3=ar[2]
+    p1 = re.compile(regEx1)
+    p2 = re.compile(regEx2)
+    p3 = re.compile(regEx3)
+    for line in t:
+        if(len(line)>=3):   #se tiver pelo menos 3 elms na linha
+            for i in range(len(line)-2):    #variar até penultimas posições
+                m1=p1.match(line[i])
+                m2=p2.match(line[i+1])
+                m3=p3.match(line[i+2])
+                #se obtivemos resultado e dá match com a regex
+                if(m1 and m2 and m3 and (m1.span()[1] == len(line[i])) and 
+                    (m2.span()[1] == len(line[i+1])) and
+                    (m3.span()[1] == len(line[i+2]))):
+                    print("(",line[i],",",line[i+1],",",line[i+2],")")
+
 def main():
     args=args_Parser()
-    print(args.regex)
 
     tagger = getTagger() #obter gramatica
 
@@ -134,10 +153,19 @@ def main():
     else:   #stdin
         sent_Matrix = readStdIn()
 
-    print(sent_Matrix)     
-    print(args.regex)   
+    #print(sent_Matrix)     
+    #print(args.regex)   
+
+    if(args.regex):
+        print("ola")
+        print(args.regex[2])
+        #Exemplo de execução:
+        # >python3 comando.py -i os_maias.txt -r Carlos \\w+ \\w+
+        filterRegEx(sent_Matrix,args.regex)
+
     """    
-        
+
+    
 
        
    
