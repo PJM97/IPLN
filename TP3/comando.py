@@ -142,6 +142,13 @@ def filterRegEx(t,ar):
                     (m3.span()[1] == len(line[i+2]))):
                     print("(",line[i],",",line[i+1],",",line[i+2],")")
 
+
+def filterGrammer(grammar_Matrix,gram):
+    #filter
+    palavras = list(map(lambda y: list(filter(lambda x: x[1]==gram, y)),grammar_Matrix))
+    #list
+    return [item[0] for s in palavras for item in s]
+    
 def main():
     args=args_Parser()
 
@@ -154,8 +161,13 @@ def main():
         sent_Matrix = readStdIn()
 
     #print(sent_Matrix)     
-    #print(args.regex)   
+    #print(args.regex)
 
+    if(args.word):
+           grammar_Matrix = list(map(tagger.tag,sent_Matrix))
+           gw=filterGrammer(grammar_Matrix,args.word)
+           print(gw)
+    """ 
     if(args.regex):
         print("ola")
         print(args.regex[2])
@@ -163,7 +175,7 @@ def main():
         # >python3 comando.py -i os_maias.txt -r Carlos \\w+ \\w+
         filterRegEx(sent_Matrix,args.regex)
 
-    """    
+       
 
     
 
