@@ -9,3 +9,11 @@ def args_Parser():
     parser.add_argument("-n","--nomes",action='store_true', help="Indicar relações com nomes")
     parser.add_argument("-p","--palavra", help="Indicar relações com esta palavra")
     return parser.parse_args()
+
+
+def main():
+    args= args_Parser()
+    print(args.regex)
+    
+if __name__ == "__main__":
+    main()    

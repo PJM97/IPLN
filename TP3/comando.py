@@ -22,8 +22,10 @@ def getFromOneFile(path,fname):
 #Matrix com as linhas do texto caso seja lido pelo stdin.
 def readStdIn():
     lista=[]
+    sys.argv=[] #resolve o bug de ler pelo stdin não funcionar com flags.
     for line in fileinput.input():
         lista.append(line)
+    
     matrix=list(map(lambda x: x.rstrip().split(),lista)) #retirar \n e separar as palavras
     return matrix 
 
@@ -121,7 +123,9 @@ def wordRelation(word,filtered_gm):
     return trigram
 
 def main():
-    args=args_Parser() #obter as flags
+    args=args_Parser()
+    print(args.regex)
+
     tagger = getTagger() #obter gramatica
 
     if(args.input): #input file
@@ -129,7 +133,14 @@ def main():
         sent_Matrix=getSentenses(corpus)   
     else:   #stdin
         sent_Matrix = readStdIn()
-    
+
+    print(sent_Matrix)     
+    print(args.regex)   
+    """    
+        
+
+       
+   
     grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matriz gramaticalmente notada
 
     if(args.nomes): #relações com todos os nomes
@@ -181,6 +192,9 @@ def main():
             else:
                 print(tri_palavra) 
 
+    elif(args.regex):
+        print("Caso pra regEx")            
+    """
     
 if __name__ == "__main__":
     main()    
