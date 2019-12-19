@@ -150,37 +150,43 @@ def filterGrammer(grammar_Matrix,gram):
     return [item[0] for s in palavras for item in s]
     
 def main():
-    args=args_Parser()
-
+    args=args_Parser()  #obter as flags/respetivos argumentos
     tagger = getTagger() #obter gramatica
 
     if(args.input): #input file
         corpus=getFromOneFile(".",args.input)
-        sent_Matrix=getSentenses(corpus)   
+        sent_Matrix=getSentenses(corpus)  
     else:   #stdin
         sent_Matrix = readStdIn()
 
-    #print(sent_Matrix)     
-    #print(args.regex)
+    #grammar_Matrix = list(map(tagger.tag,sent_Matrix))
+    #print(grammar_Matrix)
 
+
+
+    #procurar algo gramatica, exemplo: python3 comando.py -i os_maias.txt -w N
     if(args.word):
-           grammar_Matrix = list(map(tagger.tag,sent_Matrix))
-           gw=filterGrammer(grammar_Matrix,args.word)
-           print(gw)
-    """ 
+        grammar_Matrix = list(map(tagger.tag,sent_Matrix))
+        gw=filterGrammer(grammar_Matrix,args.word)
+        for w in gw:
+            print(w,"; ",end="")
+        print("\n")
+        exit(0)
+
+ 
+    # >python3 comando.py -i os_maias.txt -r Carlos \\w+ \\w+
     if(args.regex):
-        print("ola")
-        print(args.regex[2])
-        #Exemplo de execução:
-        # >python3 comando.py -i os_maias.txt -r Carlos \\w+ \\w+
         filterRegEx(sent_Matrix,args.regex)
+        exit(0)
 
        
 
-    
 
+    """
+        Estou aqui
+    """
        
-   
+    """
     grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matriz gramaticalmente notada
 
     if(args.nomes): #relações com todos os nomes
