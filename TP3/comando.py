@@ -186,7 +186,7 @@ def main():
         Estou aqui
     """
        
-    """
+  
     grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matriz gramaticalmente notada
 
     if(args.nomes): #relações com todos os nomes
@@ -237,10 +237,8 @@ def main():
                 file.close()        
             else:
                 print(tri_palavra) 
-
-    elif(args.regex):
-        print("Caso pra regEx")            
-    """
+           
+  
     
 if __name__ == "__main__":
     main()    
