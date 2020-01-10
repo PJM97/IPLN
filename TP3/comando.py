@@ -148,97 +148,98 @@ def filterGrammer(grammar_Matrix,gram):
     palavras = list(map(lambda y: list(filter(lambda x: x[1]==gram, y)),grammar_Matrix))
     #list
     return [item[0] for s in palavras for item in s]
-    
+
+
+
+
+
+
+
 def main():
+    
     args=args_Parser()  #obter as flags/respetivos argumentos
+
+    #Terminar execuções mutuamente exclusivas: não é possivel gerar grafos nos casos sem relações
+    #Restantes exclusões mutuas tratadas por args_Parser
+    if((args.nomes or args.verbs) and args.graph):
+       sys.exit("Mutuamente exclusivo, não possui relações para gerar grafos")
+
+
     tagger = getTagger() #obter gramatica
 
-    if(args.input): #input file
+    #input file
+    if(args.input): 
         corpus=getFromOneFile(".",args.input)
-        sent_Matrix=getSentenses(corpus)  
-    else:   #stdin
+        sent_Matrix=getSentenses(corpus)
+    #stdin      
+    else:   
         sent_Matrix = readStdIn()
 
-    #grammar_Matrix = list(map(tagger.tag,sent_Matrix))
-    #print(grammar_Matrix)
+    
+    #matrix de pares (Palavra,Classe_de_Palavra)
+    grammar_Matrix = list(map(tagger.tag,sent_Matrix))
 
+    #Execução Simples: Se nenhuma flag associada a processamento de texto,
+    #simplesmente imprime os pares (Palavra,Classe_de_Palavra)
+    if( args.graph == None and args.nomes == False and
+        args.output == None and args.palavra == None and
+        args.regex == None and args.verbs == False and args.word == None):
+        #Imprime cada componente gramatical
+        for l in grammar_Matrix:
+            for w in l:
+                print(w,', ',end='')
+        print('')
+        exit(0)        
 
-
-    #procurar algo gramatica, exemplo: python3 comando.py -i os_maias.txt -w N
+    #Procura por componente gramatical(Nomes -N, nomes próprios -NPROP ...)
+    # exemplo: python3 comando.py -i os_maias.txt -w N
     if(args.word):
         grammar_Matrix = list(map(tagger.tag,sent_Matrix))
         gw=filterGrammer(grammar_Matrix,args.word)
         for w in gw:
             print(w,"; ",end="")
         print("\n")
-        exit(0)
 
- 
-    # >python3 comando.py -i os_maias.txt -r Carlos \\w+ \\w+
+   
+    # Sequencia de Triplos no texto de acordo com RegEx: classicas [a-z]+ ou à python \\w+
+    # Ex: python3 comando.py -i os_maias.txt -r Carlos \\w+ \\w+
     if(args.regex):
-        filterRegEx(sent_Matrix,args.regex)
-        exit(0)
+        filterRegEx(sent_Matrix,args.regex) #imprime já o resultado
 
-       
-
-
-    """
-        Estou aqui
-    """
-       
-  
-    grammar_Matrix = list(map(tagger.tag,sent_Matrix)) #matriz gramaticalmente notada
-
-    if(args.nomes): #relações com todos os nomes
+    
+    
+    if(args.nomes or args.verbs or args.palavra):
+        #processar dados 
         filtered_gm=filterMatrix(grammar_Matrix)
-        bigram = povoate_Bigrams(filtered_gm)
 
-        if(args.graph): #caso gerar grafo output
-            nomes_weight=weigthCounter(bigram)
-            generateHTML(nomes_weight,args.graph)            
+        if(args.nomes):
+            gram = povoate_Bigrams(filtered_gm)
 
-        if(args.output):    #guardar em ficheiro
-            file = open(args.output,'w') 
-            for l in bigram:
-                file.write(str(l))
-            file.close()        
-        else:    #stdout
-            print(bigram) 
-        
-    elif(args.verbs):   #trigramas de palavra-verb-palavra
-            filtered_gm=filterMatrix(grammar_Matrix)
-            trigram = povoate_Trigrams(filtered_gm)
-            
+        if(args.verbs):  
+            gram = povoate_Trigrams(filtered_gm)
             if(args.graph): #caso de gerar grafo
-                tri_two=tritotow(trigram)
-                verbs_weight=weigthCounter(tri_two)
-                generateHTML(verbs_weight,args.graph)
-            if(args.output):
-                file = open(args.output,'w') 
-                for l in trigram:
-                    file.write(str(l))
-                file.close()        
-            else:
-                print(trigram)
-
-    elif(args.palavra):
-            filtered_gm=filterMatrix(grammar_Matrix) 
-            tri_palavra = wordRelation(args.palavra,filtered_gm)
-
+                gram=tritotow(gram)
+        
+        if(args.palavra):
+           gram = wordRelation(args.palavra,filtered_gm)
             if(args.graph):
-                tri_two_palavra=tritotow(tri_palavra)
-                verbs_weight_palavra=weigthCounter(tri_two_palavra)
-                generateHTML(verbs_weight_palavra,args.graph)
+                gram=tritotow(gram)
+            
+        if(args.graph): #caso gerar grafo output
+            gram_weight=weigthCounter(gram)
+            generateHTML(gram_weight,args.graph)  
 
-            if(args.output):
-                file = open(args.output,'w')
-                for l in tri_palavra:
-                    file.write(str(l))
-                file.close()        
-            else:
-                print(tri_palavra) 
-           
-  
+   
+    #Por enquanto ignora o caso do out.
+
+     if(args.output):    #guardar em ficheiro
+        file = open(args.output,'w') 
+        for l in gram:
+            file.write(str(l))
+        file.close()        
+    else:    #stdout
+        print(gram)
+          
     
 if __name__ == "__main__":
     main()    
