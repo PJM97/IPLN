@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+
+"""
+    chmod 750 pgp 
+    pgp -> portuguese grammar processor
+"""
 import nltk
 import sys 
 from pickle import load
