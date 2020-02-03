@@ -1,5 +1,4 @@
 from pyvis.network import Network
-import pandas as pd
 
 def generateHTML(lista,fo):
     got_net = Network(height="750px", width="100%", bgcolor="#222222", font_color="white")

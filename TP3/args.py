@@ -7,11 +7,11 @@ def args_Parser():
 
     #Opções mutuamente exclusivas: invocação simultânea iria produzir multiplos resultados misturados
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("-v","--verbs",action='store_true', help="Indicar relações com verbos")
+    group.add_argument("-v","--verbs",action='store_true', help="Indicar relações centradas em verbos")
     group.add_argument("-n","--nomes",action='store_true', help="Indicar relações com nomes")
-    group.add_argument("-r","--regex",nargs=3,help="Ficheiro input para processar")
+    group.add_argument("-r","--regex",nargs=3,help="Filtro de triplos de relações com expressões regulares")
     group.add_argument("-w","--word", help="Encontrar todas as palavras com um dado valor gramatical")
-    group.add_argument("-p","--palavra", help="Indicar relações com esta palavra")
+    group.add_argument("-p","--palavra", help="Indicar relações com palavra passada por argumento")
     
     return parser.parse_args()
 
